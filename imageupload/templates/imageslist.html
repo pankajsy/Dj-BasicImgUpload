@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block content %}
+<ul>
+    {% if images.has_previous %}
+    <li><a href="?imagepage={{ images.previous_page_number }}"><-BACK</a></li>
+    {% endif %}
+    <li><a>Imagepage {{ images.number }} <-> {{ images.paginator.num_pages }}.</a></li>
+    {% if images.has_next %}
+    <li><a href="?imagepage={{ images.next_page_number }}">NEXT-></a></li>
+    {% endif %}
+</ul>
+<center>
+    <h3>{{ view.title }}</h3>
+    <table style="width:70%">
+        <tr>
+            <th>Image Id</th>
+            <th>Image Caption</th>
+            <th>Username(Uploader)</th>
+            <th>Image</th>
+            <th>Image Name</th>
+            <th>Published date</th>
+            <th>Action</th>
+        </tr>
+        {% for image in images %}
+        <tr>
+            <th>{{image.id}}</th>
+            <th>{{image.caption}}</th>
+            <th>{{image.user.username}}</th>
+            <th><img src="{{ image.uploadimage.url}}" alt="{{image.uploadimage.name}}" height="200" width="400"
+                     align="middle"/></th>
+            <th>{{image.uploadimage.name}}</th>
+            <th>{{image.pub_date}}</th>
+            <th>
+                <!--<form action="/update_image/?pk={{image.id}}" method="GET">&ndash;&gt;-->
+                <!--&lt;!&ndash;{% csrf_token %}&ndash;&gt;-->
+                <!--&lt;!&ndash;<button type="submit" value="{{image.id}}" name="pk">Edit</button>&ndash;&gt;-->
+                <!--&lt;!&ndash;</form>-->
+                <a href="{% url 'appsec:get_image_update' image_id=image.id %}">EDIT</a>
+            </th>
+
+            <th>
+                <form action="/delete_image/" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" value="{{image.id}}" name="image_id">Delete</button>
+                </form>
+            </th>
+        </tr>
+        {% endfor %}
+
+    </table>
+</center>
+{% endblock %}

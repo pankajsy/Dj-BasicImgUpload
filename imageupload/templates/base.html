@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Application security</title>
+    <style>
+        table, th, td {
+            border: 1px solid gray;
+            border-collapse: collapse;
+        }
+        th, td {
+            text-align: center;
+            padding: 5px;
+
+        }
+        ul {
+            list-style-type: none;
+            overflow: hidden;
+            background-color: #57068c;
+        }
+        li {
+            float: left;
+        }
+        li a:hover {
+            background-color: #111;
+        }
+        li a {
+            display: block;
+            color: white;
+            padding: 15px 20px;
+        }
+
+    </style>
+</head>
+<body background="/appsec_media/bg.jpg" style="">
+{% if user.is_authenticated %}
+<ul>
+    <li><img src="/appsec_media/nyu.jpg" width="45" height="45"/></li>
+    <li><a href="{% url 'appsec:hl_logout' %}">LOGOUT(-)</a></li>
+    <li><a href="{% url 'appsec:get_image' %}"><-UPLOAD IMAGE</a></li>
+    <li><a href="{% url 'appsec:list' %}"><-IMAGE LIST</a></li>
+</ul>
+{%endif%}
+{% block content %}{% endblock %}
+</body>
+</html>

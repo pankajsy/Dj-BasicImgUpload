@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<ul>
+    <li><img src="/appsec_media/nyu.jpg" width="45" height="45"/></li>
+    <li><a href="{% url 'appsec:hl_login' %}"><b>SIGN-IN</b></a></li>
+    <li><a href=""><b>REGISTER</b></a></li>
+</ul>
+<center>
+    {% if registered %}
+    <strong>Thank you for registering!</strong>
+    <a href="{% url 'appsec:list' %}">Return to the homepage.</a>
+    {% else %}
+    <form id="hlform_login" method="post" action="{% url 'appsec:register' %}" enctype="multipart/form-data">
+        <label><h3>Welcome! Please register below...</h3></label>
+        {% csrf_token %}
+        {{ form.username.errors }}<br>
+        <label>Username:</label><br>{{ form.username }}
+        {{ form.password.errors }}<br>
+        <label>Password:</label><br>{{ form.password }}
+        {{ form.email.errors }}<br>
+        <label>Email:</label><br>{{ form.email }}<br><br>
+        <input type="submit" name="submit" value="Register"/>
+    </form>
+    {% endif %}
+
+</center>
+{% endblock %}
