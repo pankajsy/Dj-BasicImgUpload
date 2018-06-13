@@ -84,13 +84,16 @@ class ListImage(LoginRequiredMixin, TemplateView):
 #This view is used to delete the images. Django CBV along with Django braces are used for checking authenticity and simplicity
 class Delete(LoginRequiredMixin, View):
     def post(self, request, format=None):
-        print "In delete", request.POST['image_id']
+        print "In delete, Image ID-", request.POST['image_id']
         image_id = int(request.POST['image_id'])
         user_id = int(request.user.id)
         if Image.objects.filter(user_id=user_id, pk=image_id).count() > 0:
             i = Image.objects.filter(user_id=user_id, pk=image_id)
             i.delete()
-        return HttpResponseRedirect(reverse('appsec:list'))
+            return HttpResponseRedirect(reverse('appsec:list'))
+        else:
+            print('User not authorized to delete this image!!')
+            return HttpResponseRedirect(reverse('appsec:list'))
 
 #View to logout from the app with a decorator to check that logout takes place only when user is logged in
 @login_required
