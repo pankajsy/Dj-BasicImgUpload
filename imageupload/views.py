@@ -81,14 +81,33 @@ class ListImage(LoginRequiredMixin, TemplateView):
             context['images'] = final_images
         return context
 
+class YourImages(LoginRequiredMixin, TemplateView):
+    template_name = "imageslist.html"
+    title = "List of Images"
+
+    def get_context_data(self, **kwargs):
+        context = super(ListImage, self).get_context_data(**kwargs)
+        imgs = Image.objects.all().order_by('-pub_date') #We filter the images to view the most recent images first
+        if imgs.count() > 0:
+            paginator = Paginator(imgs, settings.PAGINATION_LIMIT) #Access the PAGE limit set in settings file i.e 10/page
+            page = self.request.GET.get('imagepage')
+            try:
+                final_images = paginator.page(page) #
+            except PageNotAnInteger:
+                final_images = paginator.page(1)
+            except EmptyPage:#return rest of the remaining images
+                final_images = paginator.page(paginator.num_pages)
+            context['images'] = final_images
+        return context
+
 #This view is used to delete the images. Django CBV along with Django braces are used for checking authenticity and simplicity
 class Delete(LoginRequiredMixin, View):
     def post(self, request, format=None):
         print "In delete, Image ID-", request.POST['image_id']
         image_id = int(request.POST['image_id'])
         user_id = int(request.user.id)
-        if Image.objects.filter(user_id=user_id, pk=image_id).count() > 0:
-            i = Image.objects.filter(user_id=user_id, pk=image_id)
+        if Image.objects.filter(pk=image_id).count() > 0:
+            i = Image.objects.filter(pk=image_id)
             i.delete()
             return HttpResponseRedirect(reverse('appsec:list'))
         else:
