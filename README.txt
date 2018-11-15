@@ -1,4 +1,5 @@
-APP SECURITY LOCAL SERVER DOCUMENTATION
+NYU APPLICATION SECURITY COURSE
+LOCAL SERVER DOCUMENTATION
 
 1. LAMP Stack:
 Since the web app was developed using Ubuntu 14.04 and Django Python framework make sure LAMP Stack is setup on your local computer i.e Linux, MySQL, php, Apache are running properly.
