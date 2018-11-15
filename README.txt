@@ -54,22 +54,23 @@ For MySql Setup
 Given that you have setup the mysql server properly access mysql through shell using following command
 mysql -u root -p
 We do the following steps after logging as root as per following specifications:
+User-Password is for demo purpose
 DATABASES = {
    'default': {
        'ENGINE': 'django.db.backends.mysql',
-       'NAME': 'appsec',
-       'USER': 'pankaj',
-       'PASSWORD': 'pankajnyu',
+       'NAME': 'dbname',
+       'USER': 'user',
+       'PASSWORD': 'password',
    }
 }
 
 a: Create user in MySql
 https://www.digitalocean.com/community/tutorials/how-to-create-a-new-user-and-grant-permissions-in-mysql
- 'USER': pankaj,
- 'PASSWORD': pankajnyu,
+ 'USER': user,
+ 'PASSWORD': password,
 b: Create db in MySql
 https://www.digitalocean.com/community/tutorials/a-basic-mysql-tutorial
- 'NAME': appsec,
+ 'NAME': dbname,
 c: Grant all access to created user in Mysql
 
 5. pip install -r requirements.txt from the repository
